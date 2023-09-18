@@ -17,10 +17,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 
 const isPasswordVisible = ref(false)
 
-const route = useRoute()
 const router = useRouter()
-
-const app = inject('app')
 
 const refVForm = ref<VForm>()
 const email = ref()
@@ -36,10 +33,14 @@ const login = async () => {
     const credentials = Realm.Credentials.emailPassword(email.value, password.value)
     const user = await app.logIn(credentials)
 
+    console.log('user._accessToken')
+    console.log(user._accessToken)
+
     localStorage.setItem('userData', JSON.stringify(user._profile))
     localStorage.setItem('accessToken', JSON.stringify(user._accessToken))
 
-    // Redirect to `to` query if exist or redirect to index route
+    console.log(user)
+
     router.replace('/')
   }
   catch (error) {

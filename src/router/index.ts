@@ -21,6 +21,9 @@ router.beforeEach(to => {
     // If the user is not logged in and trying to access a route other than login, redirect to login
     return '/login'
   }
+  else if (isLoggedIn && to.name === 'patient') {
+    return '/patient'
+  }
   else {
     // Continue with the navigation
     return true

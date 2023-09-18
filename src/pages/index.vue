@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import api from '../config/api'
+import format from '../config/formatResults'
 
+const router = useRouter()
 const data = ref([])
 const searchField = ref('')
 
 const headers = [
   { title: 'NAME', key: 'Name' },
-  { title: 'Added By', key: 'Added by' },
-  { title: 'Added Date', key: '' },
+  { title: 'Added By', key: 'creator_username' },
+  { title: 'Added Date', key: 'created_at' },
+  { title: 'Id', key: 'id' },
 ]
 
 const findAll = async () => {
   try {
-    console.log(await fetch('http://localhost:3000/find'))
+    const array = []
+    const res = await api.get('find')
+    if (res) {
+      data.value = format(res.data)
+      console.log(res.data)
+    }
+    else {
+      throw new Error('no results')
+    }
   }
   catch (err) {
     console.error(err)
@@ -20,28 +32,34 @@ const findAll = async () => {
 }
 
 const search = async () => {
-  if (searchField.value === '') {
-    const res = await fetch(`http://localhost:3000/search/${searchField.value}`)
+  if (searchField.value !== '') {
+    try {
+      const res = await api.get(`search/${searchField.value}`)
 
-    if (res) {
-      console.log(res)
-      data.value = res
+      if (res) {
+        console.log(res.data)
+        data.value = format(res.data)
+      }
+
+      else { throw new Error('no results') }
+    }
+    catch (error) {
+      console.log(error)
     }
   }
   else {
-    console.log(searchField.value)
-    data.value = searchResults
+    findAll()
   }
 }
 
 const click = async (event, value) => {
+  console.log(value)
+
   const patient_id = value.item.columns.id
 
   console.log(patient_id)
 
-  const res = await fetch(`http://localhost:3000/patients/${patient_id}`)
-
-  console.log(res)
+  router.push(`/patients/${patient_id}`)
 }
 
 onMounted(() => {
@@ -51,13 +69,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <VCard
-      title="Want to integrate JWT? 🔒"
-      class="mb-6"
-    >
-      <VCardText>We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.</VCardText>
-      <VCardText>Please read our  JWT Documentation to get more out of JWT authentication.</VCardText>
-    </VCard>
     <VCard
       title="Search Patients"
       class="mb-6"
@@ -78,8 +89,17 @@ onMounted(() => {
 
     <VCard
       title="Patients"
-      class="mb-6"
+      class="mb-6 refreshparent"
     >
+      <button
+        class="refresh"
+        @click="findAll"
+      >
+        <VIcon
+          color="black"
+          icon="jam:refresh"
+        />
+      </button>
       <div class="v-card-text">
         <VDataTable
           :headers="headers"
@@ -91,3 +111,15 @@ onMounted(() => {
     </VCard>
   </div>
 </template>
+
+<style scoped>
+.refreshparent {
+  position: relative;
+}
+
+.refresh {
+  position: absolute;
+  inset-block-start: 24px;
+  inset-inline-end: 24px;
+}
+</style>
