@@ -3,106 +3,15 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '../../config/api'
 import formatDate from '../../config/formatDate'
+import type { User } from '../../config/interfaces'
+
 import { appearances, behaviors, chronic_disorders, cognitive, diagnoses, insights, managements, moods, perceptions, speeches, substances, suicides, thought_contents, thought_forms } from '../../config/suggestions'
 
+const router = useRouter()
 const route = useRoute()
 
-const data = {
-  id: '6507e3bf381da9d0a6473c13',
-  Name: 'mustafa',
-  dob: 1999,
-  gender: 'male',
-  phone: '6858568',
-  creator_id: '6507e328381da9d0a6473c0c',
-  createdAt: '2023-09-18T05:44:30.972Z',
-  updatedAt: '2023-09-18T05:43:42.036Z',
-  creator: {
-    id: '6507e328381da9d0a6473c0c',
-    username: 'zain',
-    password: '1234',
-    role: 'resident',
-  },
-  visits: [
-    {
-      id: '65080db5414f2f23acd27221',
-      marital_status: '',
-      children: '',
-      occupation: '',
-      residence: '',
-      education: '',
-      chief_complaint: 'delusion',
-      present_illness: '',
-      suicide: '',
-      family_hx: '',
-      past_psychiatric_hx: '',
-      past_medical_hx: '',
-      forensic_hx: '',
-      social_hx: '',
-      drug_hx: '',
-      substance: '',
-      personal_hx: '',
-      appearance: '',
-      behavior: '',
-      speech: '',
-      mood: '',
-      thought_form: '',
-      thought_content: '',
-      perception: '',
-      cognitive_state: '',
-      differential_diagnosis: '',
-      management: '',
-      lab_tests: '',
-      notes: '',
-      insight: '',
-      provider_id: '6507f518ff9709dd1c0fc42d',
-      patient_id: '6507e3bf381da9d0a6473c13',
-      createdAt: '2023-09-18T08:43:32.827Z',
-      updatedAt: '2023-09-18T08:43:32.827Z',
-    },
-    {
-      id: '650810be5aedca84e8776ad8',
-      marital_status: 'married',
-      children: '2',
-      occupation: 'worker',
-      residence: 'baghdad',
-      education: 'elementary',
-      chief_complaint: 'panic attack',
-      present_illness: 'suffer from acute attacks',
-      suicide: 'negative',
-      family_hx: 'his uncle',
-      past_psychiatric_hx: 'previous visit',
-      past_medical_hx: 'diabetes',
-      forensic_hx: 'negative',
-      social_hx: 'good',
-      drug_hx: 'propranolol',
-      substance: 'benzodiazepine',
-      personal_hx: 'awsome childhood',
-      appearance: 'good',
-      behavior: 'well behaved',
-      speech: 'fluent',
-      mood: 'average',
-      thought_form: 'normal',
-      thought_content: 'phobia',
-      perception: 'psudohallucinations',
-      cognitive_state: 'normal',
-      differential_diagnosis: 'panic disorder, phobia',
-      management: 'fluoxetine',
-      lab_tests: 'thyroid function test',
-      notes: 'no extra notes',
-      insight: '',
-      provider_id: '6507f518ff9709dd1c0fc42d',
-      patient_id: '6507e3bf381da9d0a6473c13',
-      createdAt: '2023-09-18T08:56:29.712Z',
-      updatedAt: '2023-09-18T08:56:29.712Z',
-    },
-  ],
-}
+const data = ref<User>({})
 
-const new_marital_status = ref('')
-const new_children = ref('')
-const new_occupation = ref('')
-const new_residence = ref('')
-const new_education = ref('')
 const new_chief_complaint = ref('')
 const new_present_illness = ref('')
 const new_substance = ref('')
@@ -130,14 +39,21 @@ const new_insight = ref('')
 
 const newVisit = ref(false)
 
-const saveVisit = () => {
-  console.log(new_management.value)
-  api.post(`new-visit/${data.id}/6507f518ff9709dd1c0fc42d`, {
-    marital_status: new_marital_status.value,
-    children: new_children.value,
-    occupation: new_occupation.value,
-    residence: new_residence.value,
-    education: new_education.value,
+const fetchingPatient = async () => {
+  try {
+    const res = await api.get(`patients/${route.params.id}`)
+    if (res) {
+      console.log(res.data)
+      data.value = res.data
+    }
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+const saveVisit = async () => {
+  const res = await api.post(`new-visit/${data.value.id}/6507f518ff9709dd1c0fc42d`, {
     chief_complaint: new_chief_complaint.value,
     present_illness: new_present_illness.value,
     suicide: new_suicide.value,
@@ -163,19 +79,12 @@ const saveVisit = () => {
     notes: new_notes.value,
     insight: new_insight.value,
   })
-}
 
-const fetchingPatient = async () => {
-  try {
-    const res = await api.get(`patients/${route.params.id}`)
+  console.log(res)
 
-    console.log(res.data)
-
-    // data.value = res.data
-  }
-  catch (error) {
-    console.log(error)
-  }
+  fetchingPatient()
+  newVisit.value = false
+  router.push('/')
 }
 
 onMounted(() => {
@@ -184,10 +93,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="data.creator">
     <VCard
       :title="data.Name"
-      :subtitle="data.phone"
+      :subtitle="`Added By : Dr. ${data.creator.username}`"
       class="mb-6"
     />
 
@@ -198,11 +107,12 @@ onMounted(() => {
       <div class="v-card-text">
         <p>Gender : <span> {{ data.gender }}</span></p>
         <p>Date of birth : <span>{{ data.dob }}</span></p>
-        <p>Marital Status : <span>{{ data.visits[data.visits.length - 1].marital_status }}</span></p>
-        <p>Children : <span>{{ data.visits[data.visits.length - 1].children }}</span></p>
-        <p>Occupation : <span>{{ data.visits[data.visits.length - 1].occupation }}</span></p>
-        <p>Education : <span>{{ data.visits[data.visits.length - 1].education }}</span></p>
-        <p>Residence : <span>{{ data.visits[data.visits.length - 1].residence }}</span></p>
+        <p>Marital Status : <span>{{ data.marital_status }}</span></p>
+        <p>Children : <span>{{ data.children }}</span></p>
+        <p>Occupation : <span>{{ data.occupation }}</span></p>
+        <p>Education : <span>{{ data.education }}</span></p>
+        <p>Residence : <span>{{ data.residence }}</span></p>
+        <p>Phone : <span> {{ data.phone }}</span></p>
       </div>
     </VCard>
 
@@ -210,10 +120,18 @@ onMounted(() => {
       v-for="(visit, index) in data.visits"
       :key="visit.id"
       :title="`Visit ${index + 1}`"
-      :subtitle="formatDate(visit.createdAt)"
       class="mb-6"
     >
-      <div class="v-card-text ">
+      <div class="v-card-text">
+        <div class="refresh ">
+          <VChip
+            label
+            color="warning"
+            variant="outlined"
+          >
+            Doctor : {{ visit.provider.username }} @ {{ formatDate(visit.createdAt) }}
+          </VChip>
+        </div>
         <h2 class="mb-5">
           History
         </h2>
@@ -1101,16 +1019,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Adjust the gap as needed */
-}
-
-.info p {
-  margin: 0;
-}
-
 p {
   color: #222;
   font-size: 1rem;

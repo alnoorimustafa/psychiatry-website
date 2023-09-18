@@ -16,15 +16,11 @@ const headers = [
 
 const findAll = async () => {
   try {
-    const array = []
     const res = await api.get('find')
-    if (res) {
+    if (res && res.data)
       data.value = format(res.data)
-      console.log(res.data)
-    }
-    else {
+    else
       throw new Error('no results')
-    }
   }
   catch (err) {
     console.error(err)
@@ -91,15 +87,32 @@ onMounted(() => {
       title="Patients"
       class="mb-6 refreshparent"
     >
-      <button
-        class="refresh"
-        @click="findAll"
-      >
-        <VIcon
-          color="black"
-          icon="jam:refresh"
-        />
-      </button>
+      <div class="refresh">
+        <VBtn
+          rounded="pill"
+          color="primary"
+          class="me-2"
+          @click="findAll"
+        >
+          <VIcon
+            class="me-2"
+            color="black"
+            icon="jam:refresh"
+          />
+          refresh
+        </VBtn>
+        <VBtn
+          rounded="pill"
+          color="primary"
+        >
+          <VIcon
+            class="me-2"
+            color="black"
+            icon="codicon:new-file"
+          />
+          New Patient
+        </VBtn>
+      </div>
       <div class="v-card-text">
         <VDataTable
           :headers="headers"
