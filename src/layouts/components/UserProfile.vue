@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import avatar1 from '@images/avatars/avatar-1.png'
-
 const router = useRouter()
 const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 
@@ -32,12 +30,7 @@ const logout = () => {
       color="primary"
       variant="tonal"
     >
-      <!-- <VImg :src="avatar1" /> -->
-      <div class="text-center align-items-center justify-content-center">
-        <h4>
-          {{ userData.data.email.split('@')[0].slice(0, 2) }}
-        </h4>
-      </div>
+      {{ userData.data.email.split('@')[0].slice(0, 2).toUpperCase() }}
 
       <!-- SECTION Menu -->
       <VMenu
@@ -48,34 +41,6 @@ const logout = () => {
       >
         <VList>
           <!-- 👉 User Avatar & Name -->
-          <VListItem>
-            <template #prepend>
-              <VListItemAction start>
-                <VBadge
-                  dot
-                  location="bottom right"
-                  offset-x="3"
-                  offset-y="3"
-                  color="success"
-                >
-                  <VAvatar
-                    color="primary"
-                    variant="tonal"
-                  >
-                    <VImg :src="avatar1" />
-                  </VAvatar>
-                </VBadge>
-              </VListItemAction>
-            </template>
-
-            <VListItemTitle class="font-weight-semibold">
-              {{ userData.data.email.split('@')[0] }}
-            </VListItemTitle>
-            <VListItemSubtitle>Doctor</VListItemSubtitle>
-          </VListItem>
-
-          <!-- Divider -->
-          <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
           <VListItem to="/login">
