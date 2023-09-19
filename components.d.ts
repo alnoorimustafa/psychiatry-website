@@ -343,6 +343,7 @@ declare module '@vue/runtime-core' {
     I18n: typeof import('./src/@core/components/I18n.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
     MyAccordion: typeof import('./src/components/MyAccordion.vue')['default']
+    MyDialog: typeof import('./src/components/MyDialog.vue')['default']
     MyManagement: typeof import('./src/components/MyManagement.vue')['default']
     Notifications: typeof import('./src/@core/components/Notifications.vue')['default']
     PricingPlanDialog: typeof import('./src/components/dialogs/PricingPlanDialog.vue')['default']

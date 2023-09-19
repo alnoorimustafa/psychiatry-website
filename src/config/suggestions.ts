@@ -261,3 +261,51 @@ export const insights = [
   'poor insight',
   'good insight',
 ]
+
+export const genders = [
+  'male', 'female',
+]
+
+export const residences = [
+  'Baghdad',
+  'Najaf',
+  'Babil',
+  'Karbala',
+  'Anbar',
+  'Basra',
+  'Dhi Qar',
+  'Diyala',
+  'Qadisiyyah',
+  'Duhok',
+  'Erbil',
+  'Kirkuk',
+  'Maysan',
+  'Muthanna',
+  'Ninawa',
+  'Salah Al-Din',
+  'Sulaymaniyah',
+  'Wasit',
+]
+
+export const educations = [
+  'illiterate',
+  'primary school',
+  'secondary school',
+  'college',
+  'higher education',
+]
+
+export const marital_statuses = [
+  'single',
+  'married',
+  'divorced',
+  'widowed',
+]
+
+export const childrens = [
+  '1', '2', '3', '4', '5', '6', '7', '8',
+]
+
+export const occupations = [
+  'free worker',
+]
