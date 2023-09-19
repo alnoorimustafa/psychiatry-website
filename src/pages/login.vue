@@ -31,8 +31,10 @@ const login = async () => {
       password: password.value,
     })
 
-    if (user) {
+    if (user && user.data) {
       const decoded = jwtDecode(user.data)
+
+      console.log(decoded)
 
       localStorage.setItem('userData', JSON.stringify(decoded))
       localStorage.setItem('accessToken', JSON.stringify(user.data))

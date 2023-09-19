@@ -20,6 +20,7 @@ const residence = ref('')
 const phone = ref('')
 const children = ref('')
 const occupation = ref('')
+const loading = ref(true)
 
 const headers = [
   { title: 'NAME', key: 'Name' },
@@ -31,9 +32,11 @@ const headers = [
 const findAll = async () => {
   try {
     const res = await fetchRemote(`find/${userData.id}`)
-    if (res && res.ok)
+    if (res && res.ok) {
       data.value = format(res.data)
-    else throw new Error('no results')
+      loading.value = false
+    }
+    else { throw new Error('no results') }
   }
   catch (err) {
     console.error(err)
@@ -112,7 +115,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="!loading">
     <VCard
       title="Search Patients"
       class="mb-6"
