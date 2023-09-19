@@ -12,6 +12,7 @@ const searchField = ref('')
 const isDialogVisible = ref(false)
 
 const name = ref('')
+const dob = ref()
 const marital_status = ref('')
 const gender = ref('')
 const education = ref('')
@@ -82,6 +83,7 @@ const savePatient = async () => {
   try {
     const res = await postRemote(`new-patient/${userData.id}`, {
       Name: name.value,
+      dob: dob.value,
       marital_status: marital_status.value,
       gender: gender.value,
       education: education.value,
@@ -215,6 +217,17 @@ onMounted(() => {
                 <VTextField
                   v-model="name"
                   label="Name"
+                />
+              </VCol>
+            </VRow>
+            <VRow>
+              <VCol
+                cols="6"
+                md="6"
+              >
+                <VTextField
+                  v-model="dob"
+                  label="Birth Year"
                 />
               </VCol>
             </VRow>
