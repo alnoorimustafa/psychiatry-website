@@ -4,7 +4,7 @@ import { isUserLoggedIn } from './utils'
 import routes from '~pages'
 
 const router = createRouter({
-  history: createWebHistory('/psychiatry-website/'),
+  history: createWebHistory(),
   routes: [
     ...setupLayouts(routes),
   ],
@@ -20,9 +20,6 @@ router.beforeEach(to => {
   else if (!isLoggedIn && to.name !== 'login') {
     // If the user is not logged in and trying to access a route other than login, redirect to login
     return '/login'
-  }
-  else if (isLoggedIn && to.name === 'patient') {
-    return '/patient'
   }
   else {
     // Continue with the navigation

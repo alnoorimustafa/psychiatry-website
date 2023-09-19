@@ -64,5 +64,4 @@ export default defineConfig({
       './src/**/*.vue',
     ],
   },
-  base: '/psychiatry-website/',
 })
