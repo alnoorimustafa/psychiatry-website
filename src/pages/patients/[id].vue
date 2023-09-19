@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '../../config/api'
+import fetchRemote from '../../config/fetchRemote'
 import formatDate from '../../config/formatDate'
 import type { User } from '../../config/interfaces'
 
@@ -42,10 +43,13 @@ const newVisit = ref(false)
 
 const fetchingPatient = async () => {
   try {
-    const res = await api.get(`patients/${route.params.id}`)
-    if (res) {
+    const res = await fetchRemote(`patients/${userData.id}/${route.params.id}`)
+    if (res && res.ok) {
       console.log(res.data)
       data.value = res.data
+    }
+    else {
+      router.push('/')
     }
   }
   catch (error) {
@@ -54,7 +58,7 @@ const fetchingPatient = async () => {
 }
 
 const saveVisit = async () => {
-  const res = await api.post(`new-visit/${data.value.id}/${userData.id}`, {
+  const res = await api.post(`new-visit/${userData.id}/${data.value.id}`, {
     chief_complaint: new_chief_complaint.value,
     present_illness: new_present_illness.value,
     suicide: new_suicide.value,

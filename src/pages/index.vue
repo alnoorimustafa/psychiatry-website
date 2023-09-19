@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import api from '../config/api'
+import fetchRemote from '../config/fetchRemote'
 import format from '../config/formatResults'
 import { childrens, educations, genders, marital_statuses, occupations, residences } from '../config/suggestions'
+import postRemote from '@/config/postRemote'
 
 const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 const router = useRouter()
@@ -28,11 +29,10 @@ const headers = [
 
 const findAll = async () => {
   try {
-    const res = await api.get('find')
-    if (res && res.data)
+    const res = await fetchRemote(`find/${userData.id}`)
+    if (res && res.ok)
       data.value = format(res.data)
-    else
-      throw new Error('no results')
+    else throw new Error('no results')
   }
   catch (err) {
     console.error(err)
@@ -42,14 +42,12 @@ const findAll = async () => {
 const search = async () => {
   if (searchField.value !== '') {
     try {
-      const res = await api.get(`search/${searchField.value}`)
+      const res = await fetchRemote(`search/${userData.id}/${searchField.value}`)
 
-      if (res) {
-        console.log(res.data)
+      if (res && res.ok)
         data.value = format(res.data)
-      }
 
-      else { throw new Error('no results') }
+      else throw new Error('no results')
     }
     catch (error) {
       console.log(error)
@@ -64,8 +62,6 @@ const click = async (event, value) => {
   console.log(value)
 
   const patient_id = value.item.columns.id
-
-  console.log(patient_id)
 
   router.push(`/patients/${patient_id}`)
 }
@@ -84,7 +80,7 @@ const closeDialog = () => {
 
 const savePatient = async () => {
   try {
-    const res = await api.post(`new-patient/${userData.id}`, {
+    const res = await postRemote(`new-patient/${userData.id}`, {
       Name: name.value,
       marital_status: marital_status.value,
       gender: gender.value,
@@ -95,11 +91,13 @@ const savePatient = async () => {
       occupation: occupation.value,
     })
 
-    if (res.status === 200)
+    if (res.ok)
       router.push(`/patients/${res.data.id}`)
 
     else
-      isDialogVisible.value = false
+      console.log(res)
+
+    isDialogVisible.value = false
   }
   catch (error) {
     console.log(error)

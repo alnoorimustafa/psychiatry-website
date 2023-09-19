@@ -21,13 +21,13 @@ const isPasswordVisible = ref(false)
 const router = useRouter()
 
 const refVForm = ref<VForm>()
-const email = ref()
+const username = ref()
 const password = ref()
 
 const login = async () => {
   try {
     const user = await api.post('login', {
-      username: email.value,
+      username: username.value,
       password: password.value,
     })
 
@@ -93,8 +93,8 @@ const onSubmit = () => {
               <!-- email -->
               <VCol cols="12">
                 <AppTextField
-                  v-model="email"
-                  label="Email"
+                  v-model="username"
+                  label="Username"
                   type="email"
                   autofocus
                 />
