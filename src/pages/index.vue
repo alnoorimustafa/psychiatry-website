@@ -4,6 +4,7 @@ import api from '../config/api'
 import format from '../config/formatResults'
 import { childrens, educations, genders, marital_statuses, occupations, residences } from '../config/suggestions'
 
+const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 const router = useRouter()
 const data = ref([])
 const searchField = ref('')
@@ -83,7 +84,7 @@ const closeDialog = () => {
 
 const savePatient = async () => {
   try {
-    const res = await api.post(`new-patient/${'6507f518ff9709dd1c0fc42d'}`, {
+    const res = await api.post(`new-patient/${userData.id}`, {
       Name: name.value,
       marital_status: marital_status.value,
       gender: gender.value,
@@ -94,7 +95,11 @@ const savePatient = async () => {
       occupation: occupation.value,
     })
 
-    console.log(res.status)
+    if (res.status === 200)
+      router.push(`/patients/${res.data.id}`)
+
+    else
+      isDialogVisible.value = false
   }
   catch (error) {
     console.log(error)

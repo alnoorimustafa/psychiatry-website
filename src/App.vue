@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import * as Realm from 'realm-web'
 import { useTheme } from 'vuetify'
 import ScrollToTop from '@core/components/ScrollToTop.vue'
 import { useThemeConfig } from '@core/composable/useThemeConfig'
@@ -13,16 +12,6 @@ const { global } = useTheme()
 syncInitialLoaderTheme()
 syncConfigThemeWithVuetifyTheme()
 handleSkinChanges()
-
-const {
-  BSON: { ObjectId },
-} = Realm
-
-const app = new Realm.App({ id: 'psychiatry-app-jkwtz' })
-const mongo = app.currentUser?.mongoClient('mongodb-atlas')
-
-provide('app', app)
-provide('mongo', mongo)
 </script>
 
 <template>

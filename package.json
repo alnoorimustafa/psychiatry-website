@@ -12,6 +12,7 @@
     "postinstall": "npm run build:icons"
   },
   "dependencies": {
+    "jwt-decode": "^3.1.2",
     "@casl/ability": "6.5.0",
     "@casl/vue": "2.2.1",
     "@floating-ui/dom": "1.2.7",

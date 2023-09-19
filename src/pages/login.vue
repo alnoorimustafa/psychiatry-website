@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import * as Realm from 'realm-web'
+import jwtDecode from 'jwt-decode'
 import { VForm } from 'vuetify/components/VForm'
+import api from '@/config/api'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
 import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
@@ -22,26 +23,22 @@ const router = useRouter()
 const refVForm = ref<VForm>()
 const email = ref()
 const password = ref()
-const rememberMe = ref(false)
 
 const login = async () => {
   try {
-    const {
-      BSON: { ObjectId },
-    } = Realm
+    const user = await api.post('login', {
+      username: email.value,
+      password: password.value,
+    })
 
-    const credentials = Realm.Credentials.emailPassword(email.value, password.value)
-    const user = await app.logIn(credentials)
+    if (user) {
+      const decoded = jwtDecode(user.data)
 
-    console.log('user._accessToken')
-    console.log(user._accessToken)
+      localStorage.setItem('userData', JSON.stringify(decoded))
+      localStorage.setItem('accessToken', JSON.stringify(user.data))
 
-    localStorage.setItem('userData', JSON.stringify(user._profile))
-    localStorage.setItem('accessToken', JSON.stringify(user._accessToken))
-
-    console.log(user)
-
-    router.replace('/')
+      router.replace('/')
+    }
   }
   catch (error) {
     console.log(error)

@@ -7,6 +7,7 @@ import type { User } from '../../config/interfaces'
 
 import { appearances, behaviors, chronic_disorders, cognitive, diagnoses, insights, managements, moods, perceptions, speeches, substances, suicides, thought_contents, thought_forms } from '../../config/suggestions'
 
+const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 const router = useRouter()
 const route = useRoute()
 
@@ -53,7 +54,7 @@ const fetchingPatient = async () => {
 }
 
 const saveVisit = async () => {
-  const res = await api.post(`new-visit/${data.value.id}/6507f518ff9709dd1c0fc42d`, {
+  const res = await api.post(`new-visit/${data.value.id}/${userData.id}`, {
     chief_complaint: new_chief_complaint.value,
     present_illness: new_present_illness.value,
     suicide: new_suicide.value,

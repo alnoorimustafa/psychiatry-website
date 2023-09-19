@@ -2,8 +2,6 @@
 const router = useRouter()
 const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 
-console.log(userData.data.email.split('@')[0])
-
 const logout = () => {
   // Remove "userData" from localStorage
   localStorage.removeItem('userData')
@@ -30,7 +28,7 @@ const logout = () => {
       color="primary"
       variant="tonal"
     >
-      {{ userData.data.email.split('@')[0].slice(0, 2).toUpperCase() }}
+      {{ userData.username.split('@')[0].slice(0, 2).toUpperCase() }}
 
       <!-- SECTION Menu -->
       <VMenu
