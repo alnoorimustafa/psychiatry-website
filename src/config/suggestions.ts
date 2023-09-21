@@ -7,21 +7,21 @@ export const thought_contents = [
 ]
 
 export const thought_forms = [
-  'normal',
+  'no FTD',
   'circumstantial',
   'tangential',
   'loose associations',
   'derailment',
+  'flight of ideas',
   'word salad',
 ]
 
 export const perceptions = [
-  'auditory', 'visual', 'hallucinations', 'illusion', 'pseudohallucination',
+  'auditory hallucinations', 'visual hallucinations', 'illusion', 'pseudohallucination',
 ]
 
 export const managements = [
   'fluoxetine',
-  'moclobemide',
   'haloperidol',
   'sertraline',
   'venlafaxine',
@@ -37,53 +37,20 @@ export const managements = [
   'escitalopram',
   'bupropion',
   'olanzapine',
-  'clozapine',
-  'lithium',
   'carbamazepine',
   'valproic acid',
-  'trazodone',
   'aripiprazole',
-  'ziprasidone',
-  'lurasidone',
-  'lithium carbonate',
   'lamotrigine',
   'topiramate',
   'buspirone',
-  'phenelzine',
-  'selegiline',
   'venlafaxine',
   'duloxetine',
   'mirtazapine',
-  'tranylcypromine',
-  'propranolol',
-  'temazepam',
   'zolpidem',
-  'zaleplon',
-  'doxepin',
-  'hydroxyzine',
   'chlorpromazine',
   'trifluoperazine',
   'fluphenazine',
   'aripiprazole',
-  'asenapine',
-  'brexpiprazole',
-  'cariprazine',
-  'chlorpromazine',
-  'clozapine',
-  'fluphenazine',
-  'haloperidol',
-  'iloperidone',
-  'lurasidone',
-  'molindone',
-  'olanzapine',
-  'paliperidone',
-  'perphenazine',
-  'pimavanserin',
-  'quetiapine',
-  'risperidone',
-  'thioridazine',
-  'trifluoperazine',
-  'ziprasidone',
 ]
 
 export const diagnoses = [
@@ -147,8 +114,8 @@ export const cognitive = [
   'disoriented',
   'Attentive',
   'poor attention',
+  'poor immediate memory',
   'poor short memory',
-  'poor intermediate memory',
   'poor long memory',
   'low IQ',
   'concrete thinking',
@@ -183,6 +150,8 @@ export const moods = [
   'restricted affect',
   'blunted affect',
   'flat affect',
+  'congruent',
+  'incongruent',
 ]
 
 export const behaviors = [
@@ -192,6 +161,8 @@ export const behaviors = [
   'disinhibited',
   'good attitude',
   'poor attitude',
+  'cooperative',
+  'uncooperative',
   'abnormal movement',
 ]
 
@@ -200,7 +171,8 @@ export const appearances = [
   'abnormal posture',
   'inappropriate clothes',
   'poor self-care',
-  'poor health',
+  'flamboyant',
+  'looks ill',
 ]
 
 export const substances = [
@@ -210,20 +182,15 @@ export const substances = [
   'Prescription Painkillers (Opioids)',
   'Heroin',
   'Cocaine',
+  'Benzodiazepines',
   'Methamphetamine',
   'Ecstasy (MDMA)',
-  'LSD (Acid)',
-  'Psilocybin (Magic Mushrooms)',
-  'Ketamine',
   'Inhalants',
-  'Synthetic Cannabinoids (Spice/K2)',
-  'Benzodiazepines',
-  'Synthetic Cathinones (Bath Salts)',
+  'LSD (Acid)',
   'Anabolic Steroids',
-  'DXM (Dextromethorphan)',
-  'GHB (Gamma-Hydroxybutyrate)',
-  'Kratom',
-  'Salvia Divinorum',
+  'pregabalin',
+  'gabapentine',
+  'procyclindin',
 ]
 
 export const suicides = [
@@ -258,8 +225,9 @@ export const chronic_disorders = [
 ]
 
 export const insights = [
-  'poor insight',
-  'good insight',
+  'insightfull',
+  'partial insight',
+  'lack of insight',
 ]
 
 export const genders = [
@@ -292,7 +260,7 @@ export const educations = [
   'primary school',
   'secondary school',
   'college',
-  'higher education',
+  'high education',
 ]
 
 export const marital_statuses = [
@@ -307,5 +275,10 @@ export const childrens = [
 ]
 
 export const occupations = [
+  'house wife',
   'free worker',
+  'nurse',
+  'physician',
+  'engineer',
+  'pharmacist',
 ]

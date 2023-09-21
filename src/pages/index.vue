@@ -21,6 +21,7 @@ const phone = ref('')
 const children = ref('')
 const occupation = ref('')
 const loading = ref(true)
+const dobError = ref(false)
 
 const headers = [
   { title: 'NAME', key: 'Name' },
@@ -83,10 +84,19 @@ const closeDialog = () => {
 }
 
 const savePatient = async () => {
+  dobError.value = false
+
+  if (isNaN(+dob.value) || !/^\d{4}$/.test(dob.value) || +dob.value <= 1900 || +dob.value >= 2030) {
+    dobError.value = true
+    dob.value = null
+
+    return
+  }
+
   try {
     const res = await postRemote(`new-patient/${userData.id}`, {
       Name: name.value,
-      dob: dob.value,
+      dob: +dob.value,
       marital_status: marital_status.value,
       gender: gender.value,
       education: education.value,
@@ -96,17 +106,37 @@ const savePatient = async () => {
       occupation: occupation.value,
     })
 
-    if (res.ok)
+    if (res.ok) {
+      name.value = ''
+      dob.value = null
+      marital_status.value = ''
+      gender.value = ''
+      education.value = ''
+      residence.value = ''
+      phone.value = ''
+      children.value = ''
+      occupation.value = ''
       router.push(`/patients/${res.data.id}`)
+    }
 
-    else
-      console.log(res)
+    else { console.log(res) }
 
     isDialogVisible.value = false
   }
   catch (error) {
     console.log(error)
   }
+}
+
+const validateInput = () => {
+  // Remove any non-numeric characters from the input
+  const reformed = dob.value.replace(/\D/g, '')
+
+  dob.value = reformed
+
+  // Ensure that the input is exactly four digits
+  if (dob.value.length > 4)
+    dob.value = dob.value.slice(0, 4)
 }
 
 onMounted(() => {
@@ -172,6 +202,7 @@ onMounted(() => {
         />
       </div>
     </VCard>
+
     <div>
       <VDialog
         v-model="isDialogVisible"
@@ -231,7 +262,21 @@ onMounted(() => {
                 <VTextField
                   v-model="dob"
                   label="Birth Year"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="4"
+                  @input="validateInput"
                 />
+              </VCol>
+              <VCol>
+                <p
+                  v-if="dobError"
+                  class="mt-2"
+                  style="color: crimson;"
+                >
+                  please enter a valid year
+                </p>
               </VCol>
             </VRow>
             <VRow>
@@ -399,6 +444,21 @@ onMounted(() => {
         </VCard>
       </VDialog>
     </div>
+  </div>
+  <div
+    v-else
+    class="text-center align-items-center"
+  >
+    <p class="primary">
+      Please
+      <a
+        class="text-primary"
+        href="/"
+      >
+        Refresh
+      </a>
+      the page. If it still doesn't work, please contact @alnoorimustafa94 on Telegram
+    </p>
   </div>
 </template>
 
