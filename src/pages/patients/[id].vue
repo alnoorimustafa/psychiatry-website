@@ -6,7 +6,7 @@ import fetchRemote from '../../config/fetchRemote'
 import formatDate from '../../config/formatDate'
 import type { User } from '../../config/interfaces'
 
-import { appearances, behaviors, chronic_disorders, cognitive, diagnoses, insights, managements, moods, perceptions, speeches, substances, suicides, thought_contents, thought_forms } from '../../config/suggestions'
+import { appearances, behaviors, chronic_disorders, cognitive, diagnoses, family_hxs, insights, managements, moods, perceptions, speeches, substances, suicides, thought_contents, thought_forms } from '../../config/suggestions'
 
 const userData = JSON.parse(localStorage.getItem('userData') || 'null')
 const router = useRouter()

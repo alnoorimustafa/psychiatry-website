@@ -23,6 +23,7 @@ const router = useRouter()
 const refVForm = ref<VForm>()
 const username = ref()
 const password = ref()
+const errorMessage = ref('')
 
 const login = async () => {
   try {
@@ -43,6 +44,7 @@ const login = async () => {
     }
   }
   catch (error) {
+    errorMessage.value = 'Wrong username or password'
     console.log(error)
   }
 }
@@ -112,7 +114,9 @@ const onSubmit = () => {
                   :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
-
+                <p style="color:crimson">
+                  {{ errorMessage }}
+                </p>
                 <VBtn
                   block
                   type="submit"
