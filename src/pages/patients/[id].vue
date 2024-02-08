@@ -137,83 +137,92 @@ onMounted(() => {
             Doctor : {{ visit.provider.username }} @ {{ formatDate(visit.createdAt) }}
           </VChip>
         </div>
-        <h2 class="mb-5">
-          History
-        </h2>
-        <p v-if="visit.chief_complaint">
-          Chief Complaint : <span>{{ visit.chief_complaint }}</span>
-        </p>
-        <p v-if="visit.present_illness">
-          History of Present Illness : <span>{{ visit.present_illness }}</span>
-        </p>
-        <p v-if="visit.substance">
-          Substance Hx : <span>{{ visit.substance }}</span>
-        </p>
-        <p v-if="visit.drug_hx">
-          Drug Hx : <span>{{ visit.drug_hx }}</span>
-        </p>
-        <p v-if="visit.suicide">
-          Suicide Hx : <span>{{ visit.suicide }}</span>
-        </p>
-        <p v-if="visit.past_psychiatric_hx">
-          Past Psychiatric Hx : <span>{{ visit.past_psychiatric_hx }}</span>
-        </p>
-        <p v-if="visit.family_hx">
-          Family Hx : <span>{{ visit.family_hx }}</span>
-        </p>
-        <p v-if="visit.past_medical_hx">
-          Medical Hx : <span>{{ visit.past_medical_hx }}</span>
-        </p>
-        <p v-if="visit.personal_hx">
-          Personal Hx : <span>{{ visit.personal_hx }}</span>
-        </p>
-        <p v-if="visit.social_hx">
-          Social Hx : <span>{{ visit.social_hx }}</span>
-        </p>
-        <p v-if="visit.forensic_hx">
-          Forensic Hx : <span>{{ visit.forensic_hx }}</span>
-        </p>
-        <p v-if="visit.lab_tests">
-          Lab Tests : <span>{{ visit.lab_tests }}</span>
-        </p>
-        <p v-if="visit.notes">
-          notes : <span>{{ visit.notes }}</span>
-        </p>
-      </div>
+        <div v-if="index === 0">
+          <h2 class="mb-5">
+            History
+          </h2>
 
-      <div class="v-card-text">
-        <h2 class="mb-5">
-          Mental State Examination
-        </h2>
-        <p v-if="visit.appearance">
-          Appearance : <span>{{ visit.appearance }}</span>
-        </p>
-        <p v-if="visit.behavior">
-          behavior : <span>{{ visit.behavior }}</span>
-        </p>
-        <p v-if="visit.mood">
-          Mood : <span>{{ visit.mood }}</span>
-        </p>
-        <p v-if="visit.speech">
-          Speech : <span>{{ visit.speech }}</span>
-        </p>
-        <p v-if="visit.thought_form">
-          Though Form : <span>{{ visit.thought_form }}</span>
-        </p>
-        <p v-if="visit.thought_content">
-          Though Content : <span>{{ visit.thought_content }}</span>
-        </p>
-        <p v-if="visit.perception">
-          Perception : <span>{{ visit.perception }}</span>
-        </p>
-        <p v-if="visit.cognitive_state">
-          Cognitive state : <span>{{ visit.cognitive_state }}</span>
-        </p>
-        <p v-if="visit.insight">
-          Insight : <span>{{ visit.insight }}</span>
-        </p>
+          <p v-if="visit.chief_complaint">
+            Chief Complaint : <span>{{ visit.chief_complaint }}</span>
+          </p>
+          <p v-if="visit.present_illness">
+            History of Present Illness : <span>{{ visit.present_illness }}</span>
+          </p>
+          <p v-if="visit.substance">
+            Substance Hx : <span>{{ visit.substance }}</span>
+          </p>
+          <p v-if="visit.drug_hx">
+            Drug Hx : <span>{{ visit.drug_hx }}</span>
+          </p>
+          <p v-if="visit.suicide">
+            Suicide Hx : <span>{{ visit.suicide }}</span>
+          </p>
+          <p v-if="visit.past_psychiatric_hx">
+            Past Psychiatric Hx : <span>{{ visit.past_psychiatric_hx }}</span>
+          </p>
+          <p v-if="visit.family_hx">
+            Family Hx : <span>{{ visit.family_hx }}</span>
+          </p>
+          <p v-if="visit.past_medical_hx">
+            Medical Hx : <span>{{ visit.past_medical_hx }}</span>
+          </p>
+          <p v-if="visit.personal_hx">
+            Personal Hx : <span>{{ visit.personal_hx }}</span>
+          </p>
+          <p v-if="visit.social_hx">
+            Social Hx : <span>{{ visit.social_hx }}</span>
+          </p>
+          <p v-if="visit.forensic_hx">
+            Forensic Hx : <span>{{ visit.forensic_hx }}</span>
+          </p>
+          <p v-if="visit.lab_tests">
+            Lab Tests : <span>{{ visit.lab_tests }}</span>
+          </p>
+          <p v-if="visit.notes">
+            notes : <span>{{ visit.notes }}</span>
+          </p>
+        </div>
+        <div v-else-if="visit.present_illness">
+          <h2 class="mb-5">
+            Follow Up
+          </h2>
+          <span>{{ visit.present_illness }}</span>
+        </div>
       </div>
-
+      <div v-if="index === 0">
+        <div class="v-card-text">
+          <h2 class="mb-5">
+            Mental State Examination
+          </h2>
+          <p v-if="visit.appearance">
+            Appearance : <span>{{ visit.appearance }}</span>
+          </p>
+          <p v-if="visit.behavior">
+            behavior : <span>{{ visit.behavior }}</span>
+          </p>
+          <p v-if="visit.mood">
+            Mood : <span>{{ visit.mood }}</span>
+          </p>
+          <p v-if="visit.speech">
+            Speech : <span>{{ visit.speech }}</span>
+          </p>
+          <p v-if="visit.thought_form">
+            Though Form : <span>{{ visit.thought_form }}</span>
+          </p>
+          <p v-if="visit.thought_content">
+            Though Content : <span>{{ visit.thought_content }}</span>
+          </p>
+          <p v-if="visit.perception">
+            Perception : <span>{{ visit.perception }}</span>
+          </p>
+          <p v-if="visit.cognitive_state">
+            Cognitive state : <span>{{ visit.cognitive_state }}</span>
+          </p>
+          <p v-if="visit.insight">
+            Insight : <span>{{ visit.insight }}</span>
+          </p>
+        </div>
+      </div>
       <div
         v-if="visit.differential_diagnosis"
         class="v-card-text"
