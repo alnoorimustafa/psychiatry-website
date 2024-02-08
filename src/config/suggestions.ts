@@ -16,6 +16,36 @@ export const thought_forms = [
   'word salad',
 ]
 
+export const present_illness = [
+  'delusion',
+  'hallucination',
+  'disorganized speech',
+  'disorganized behavior',
+  'catatonic behavior',
+  'negative symptoms',
+  'anhedonia',
+  'low mood',
+  'guilt',
+  'disturbed sleep',
+  'disturbed appetite',
+  'suicidal ideas',
+  'low energy',
+  'indecisiveness',
+  'poor concentration',
+  'elated mood',
+  'irritability',
+  'increased self esteem',
+  'less need for sleep',
+  'overfamiliarity',
+  'grandiosity',
+  'recklessness',
+  'pressured speech',
+  'over talkative',
+  'anxiety',
+  'obsessions',
+  'compulsions',
+]
+
 export const perceptions = [
   'auditory hallucinations', 'visual hallucinations', 'illusion', 'pseudohallucination',
 ]
@@ -51,6 +81,23 @@ export const managements = [
   'trifluoperazine',
   'fluphenazine',
   'aripiprazole',
+  '5mg',
+  '10mg',
+  '15mg',
+  '20mg',
+  '25mg',
+  '50mg',
+  '75mg',
+  '100mg',
+  '200mg',
+  '300mg',
+  '1x1',
+  '1x2',
+  '1x3',
+  '1x4',
+  'ليلا',
+  'صباحا',
+  'ظهرا',
 ]
 
 export const diagnoses = [
