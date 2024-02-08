@@ -250,44 +250,52 @@ onMounted(() => {
         />
       </button>
 
+      <!-- History -->
       <div class="v-card-text">
-        <h2 class="mb-5">
-          History
-        </h2>
-
-        <p>
-          Chief Complaint :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_chief_complaint"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in chief_complaints"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_chief_complaint = `${new_chief_complaint}${new_chief_complaint ? ', ' : ''}${item}`"
+        <div v-if="data.visits.length === 0">
+          <h2 class="mb-5">
+            History
+          </h2>
+          <p>
+            Chief Complaint :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_chief_complaint"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in chief_complaints"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_chief_complaint = `${new_chief_complaint}${new_chief_complaint ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
+        </div>
 
-        <p>
+        <p v-if="data.visits.length === 0">
           History of Present Illness :
         </p>
+        <h2
+          v-else
+          class="mb-5"
+        >
+          Follow Up
+        </h2>
         <VRow>
           <VCol
             cols="12"
@@ -315,646 +323,658 @@ onMounted(() => {
           </VCol>
         </VRow>
 
-        <p>
-          Substance Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_substance"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in substances"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_substance = `${new_substance}${new_substance ? ', ' : ''}${item}`"
+        <div v-if="data.visits.length === 0">
+          <p>
+            Substance Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_substance"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in substances"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_substance = `${new_substance}${new_substance ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Drug Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_drug_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in managements"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_drug_hx = `${new_drug_hx}${new_drug_hx ? ', ' : ''}${item}`"
+          <p>
+            Drug Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_drug_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in managements"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_drug_hx = `${new_drug_hx}${new_drug_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Suicide Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_suicide"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in suicides"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_suicide = `${new_suicide}${new_suicide ? ', ' : ''}${item}`"
+          <p>
+            Suicide Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_suicide"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in suicides"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_suicide = `${new_suicide}${new_suicide ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Past Psychiatric Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_past_psychiatric_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in past_psychiatrics"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_past_psychiatric_hx = `${new_past_psychiatric_hx}${new_past_psychiatric_hx ? ', ' : ''}${item}`"
+          <p>
+            Past Psychiatric Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_past_psychiatric_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in past_psychiatrics"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_past_psychiatric_hx = `${new_past_psychiatric_hx}${new_past_psychiatric_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Family Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_family_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in family_hxs"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_family_hx = `${new_family_hx}${new_family_hx ? ', ' : ''}${item}`"
+          <p>
+            Family Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_family_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in family_hxs"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_family_hx = `${new_family_hx}${new_family_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Medical Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_past_medical_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in chronic_disorders"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_past_medical_hx = `${new_past_medical_hx}${new_past_medical_hx ? ', ' : ''}${item}`"
+          <p>
+            Medical Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_past_medical_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in chronic_disorders"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_past_medical_hx = `${new_past_medical_hx}${new_past_medical_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Personal Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_personal_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in personal_hxs"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_personal_hx = `${new_personal_hx}${new_personal_hx ? ', ' : ''}${item}`"
+          <p>
+            Personal Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_personal_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in personal_hxs"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_personal_hx = `${new_personal_hx}${new_personal_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Social Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_social_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in social_hxs"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_social_hx = `${new_social_hx}${new_social_hx ? ', ' : ''}${item}`"
+          <p>
+            Social Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_social_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in social_hxs"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_social_hx = `${new_social_hx}${new_social_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Forensic Hx :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_forensic_hx"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in forensic_hxs"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_forensic_hx = `${new_forensic_hx}${new_forensic_hx ? ', ' : ''}${item}`"
+          <p>
+            Forensic Hx :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_forensic_hx"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in forensic_hxs"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_forensic_hx = `${new_forensic_hx}${new_forensic_hx ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Lab Tests :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_lab_tests"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in lab_tests"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_lab_tests = `${new_lab_tests}${new_lab_tests ? ', ' : ''}${item}`"
+          <p>
+            Lab Tests :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_lab_tests"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in lab_tests"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_lab_tests = `${new_lab_tests}${new_lab_tests ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Notes :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_notes"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in notess"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_notes = `${new_notes}${new_notes ? ', ' : ''}${item}`"
+          <p>
+            Notes :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_notes"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in notess"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_notes = `${new_notes}${new_notes ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
+        </div>
       </div>
 
-      <div class="v-card-text">
-        <h2 class="mb-5">
-          Mental State Examination
-        </h2>
-        <p>
-          Appearance :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_appearance"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in appearances"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_appearance = `${new_appearance}${new_appearance ? ', ' : ''}${item}`"
+      <!-- Mental State -->
+      <div v-if="data.visits.length === 0">
+        <div class="v-card-text">
+          <h2 class="mb-5">
+            Mental State Examination
+          </h2>
+          <p>
+            Appearance :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_appearance"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in appearances"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_appearance = `${new_appearance}${new_appearance ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          behavior :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_behavior"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in behaviors"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_behavior = `${new_behavior}${new_behavior ? ', ' : ''}${item}`"
+          <p>
+            behavior :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_behavior"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in behaviors"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_behavior = `${new_behavior}${new_behavior ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Mood :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_mood"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in moods"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_mood = `${new_mood}${new_mood ? ', ' : ''}${item}`"
+          <p>
+            Mood :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_mood"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in moods"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_mood = `${new_mood}${new_mood ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Speech :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_speech"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in speeches"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_speech = `${new_speech}${new_speech ? ', ' : ''}${item}`"
+          <p>
+            Speech :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_speech"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in speeches"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_speech = `${new_speech}${new_speech ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Though Form :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_thought_form"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in thought_forms"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_thought_form = `${new_thought_form}${new_thought_form ? ', ' : ''}${item}`"
+          <p>
+            Though Form :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_thought_form"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in thought_forms"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_thought_form = `${new_thought_form}${new_thought_form ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Though Content :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_thought_content"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in thought_contents"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_thought_content = `${new_thought_content}${new_thought_content ? ', ' : ''}${item}`"
+          <p>
+            Though Content :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_thought_content"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in thought_contents"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_thought_content = `${new_thought_content}${new_thought_content ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Perception :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_perception"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="perception in perceptions"
-              :key="perception"
-              class="me-2 mb-2"
-              label
-              @click="new_perception = `${new_perception}${new_perception ? ', ' : ''}${perception}`"
+          <p>
+            Perception :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ perception }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_perception"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="perception in perceptions"
+                :key="perception"
+                class="me-2 mb-2"
+                label
+                @click="new_perception = `${new_perception}${new_perception ? ', ' : ''}${perception}`"
+              >
+                {{ perception }}
+              </VChip>
+            </VCol>
+          </VRow>
 
-        <p>
-          Cognitive state :
-        </p>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_cognitive_state"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in cognitive"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_cognitive_state = `${new_cognitive_state}${new_cognitive_state ? ', ' : ''}${item}`"
+          <p>
+            Cognitive state :
+          </p>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_cognitive_state"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in cognitive"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_cognitive_state = `${new_cognitive_state}${new_cognitive_state ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
+        </div>
       </div>
 
-      <div class="v-card-text">
-        <h2 class="mb-5">
-          Insight :
-        </h2>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_insight"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in insights"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_insight = `${new_insight}${new_insight ? ', ' : ''}${item}`"
+      <!-- Insight -->
+      <div v-if="data.visits.length === 0">
+        <div class="v-card-text">
+          <h2 class="mb-5">
+            Insight :
+          </h2>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_insight"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in insights"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_insight = `${new_insight}${new_insight ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
+        </div>
       </div>
 
-      <div class="v-card-text">
-        <h2 class="mb-5">
-          Differential Diagnosis
-        </h2>
-        <VRow>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <AppTextarea
-              v-model="new_differential_diagnosis"
-              class="mb-8"
-              auto-grow
-            />
-          </VCol>
-          <VCol
-            cols="12"
-            sm="6"
-          >
-            <VChip
-              v-for="item in diagnoses"
-              :key="item"
-              class="me-2 mb-2"
-              label
-              @click="new_differential_diagnosis = `${new_differential_diagnosis}${new_differential_diagnosis ? ', ' : ''}${item}`"
+      <!-- Differential Diagnosis -->
+      <div v-if="data.visits.length === 0">
+        <div class="v-card-text">
+          <h2 class="mb-5">
+            Differential Diagnosis
+          </h2>
+          <VRow>
+            <VCol
+              cols="12"
+              sm="6"
             >
-              {{ item }}
-            </VChip>
-          </VCol>
-        </VRow>
+              <AppTextarea
+                v-model="new_differential_diagnosis"
+                class="mb-8"
+                auto-grow
+              />
+            </VCol>
+            <VCol
+              cols="12"
+              sm="6"
+            >
+              <VChip
+                v-for="item in diagnoses"
+                :key="item"
+                class="me-2 mb-2"
+                label
+                @click="new_differential_diagnosis = `${new_differential_diagnosis}${new_differential_diagnosis ? ', ' : ''}${item}`"
+              >
+                {{ item }}
+              </VChip>
+            </VCol>
+          </VRow>
+        </div>
       </div>
 
+      <!-- Management -->
       <div class="v-card-text">
         <h2 class="mb-5">
           Management
